@@ -1,0 +1,92 @@
+---
+information_for_contributors:
+  - sub repository marktex.latex
+# version: "github.com/Myriad-Dreamin/marktex-vscode-tm-grammar"
+name: marktex
+scopeName: text.latex.marktex
+patterns:
+- include: "#inline"
+- include: "#block"
+repository:
+  inline:
+    patterns:
+    - include: "#std-function"
+    - include: "#function"
+  block:
+    patterns:
+    - include: "#begin-environment"
+  begin-environment:
+    name: environment.block.latex.marktex
+    begin: ((\\)begin){(\w+)}
+    beginCaptures:
+      '1':
+        name: support.function.general.tex
+      '2':
+        name: punctuation.definition.function.tex
+    end: ((\\)end){\3}
+    endCaptures:
+      '1':
+        name: support.function.general.tex
+      '2':
+        name: punctuation.definition.function.tex
+    patterns:
+    - include: "#option-inner"
+    - include: "$self"
+    - include: "#inline"
+  std-function:
+    begin: (\\)(?:(?:re)?newrobustcmd|(?:re)?newcommand|DeclareRobustCommand)
+    beginCaptures:
+      '0':
+        name: storage.type.function.latex
+      '1':
+        name: punctuation.definition.function.latex
+    end: "([ ]|$)"
+    patterns:
+    - include: "#option-bracket"
+    - include: "#option-brace"
+  function:
+    begin: ((\\)[A-Za-z@]+)
+    beginCaptures:
+      '1':
+        name: support.function.general.tex
+      '2':
+        name: punctuation.definition.function.tex
+    end: "([ ]|$)"
+    patterns:
+    - include: "#option-bracket"
+    - include: "#option-brace"
+  option-bracket:
+    name: text.inner.bracket.marktex
+    begin: \[
+    beginCaptures:
+      '0':
+        name: punctuation.definition.begin.latex
+    end: \]
+    endCaptures:
+      '0':
+        name: punctuation.definition.end.latex
+    patterns:
+    - include: "#option-inner"
+  option-brace:
+    name: text.inner.brace.marktex
+    begin: '{'
+    beginCaptures:
+      '0':
+        name: punctuation.definition.begin.latex
+    end: '}'
+    endCaptures:
+      '0':
+        name: punctuation.definition.end.latex
+    patterns:
+    - include: "#option-inner"
+  option-inner:
+    patterns:
+    - match: \\[\\{}\[\]]
+      name: constant.character.escape.markdown
+    - include: "#inline"
+    - include: "#option-brace"
+    - include: "#option-bracket"
+    - include: "#number"
+  number:
+    match: \d+
+    name: constant.numeric.decimal

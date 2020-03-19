@@ -1,0 +1,45 @@
+{
+    "name": "marktex",
+    "displayName": "Language Support for MarkTeX",
+    "description": "Language Support for Visual Studio Code",
+    "version": "0.0.1",
+    "engines": {
+        "vscode": "^1.43.0"
+    },
+    "categories": [
+        "Programming Languages"
+    ],
+    "scripts": {
+        "compile-main": "npx js-yaml syntaxes/marktex.tmLanguage.yaml > syntaxes/marktex.tmLanguage.json",
+        "compile-sub": "npx js-yaml syntaxes/marktex.latex.tmLanguage.yaml > syntaxes/marktex.latex.tmLanguage.json",
+        "compile": "yarn run compile-main && yarn run compile-sub",
+        "prestart": "yarn run compile"
+    },
+    "contributes": {
+        "languages": [
+            {
+                "id": "marktex",
+                "extensions": [
+                    ".md",
+                    ".mdtex"
+                ],
+                "configuration": "./language-configuration.json"
+            }
+        ],
+        "grammars": [
+            {
+                "language": "marktex",
+                "scopeName": "text.html.marktex",
+                "path": "./syntaxes/marktex.tmLanguage.json"
+            },
+            {
+                "scopeName": "text.latex.marktex",
+                "path": "./syntaxes/marktex.latex.tmLanguage.json"
+            }
+        ]
+    },
+    "devDependencies": {
+        "js-yaml": "^3.13.1",
+        "vscode-test": "^1.3.0"
+    }
+}
