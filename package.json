@@ -2,7 +2,7 @@
     "name": "marktex",
     "displayName": "MarkTeX Language Support",
     "description": "MarkTeX Language Support for Visual Studio Code",
-    "version": "0.0.1",
+    "version": "0.1.0",
     "engines": {
         "vscode": "^1.43.0"
     },
